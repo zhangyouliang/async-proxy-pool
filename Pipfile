@@ -12,6 +12,9 @@ chardet = "*"
 greenlet = "*"
 sqlalchemy = "*"
 psutil = "*"
+pymongo = "*"
+flask = "*"
+flask-script = "*"
 
 [dev-packages]
 
