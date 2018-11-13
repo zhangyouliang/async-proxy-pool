@@ -189,7 +189,7 @@ def get_header():
 #默认给抓取的ip分配20分,每次连接失败,减一分,直到分数全部扣完从数据库中删除
 DEFAULT_SCORE=10
 
-TEST_URL = 'http://ip.chinaz.com/getip.aspx'
+TEST_URL = 'http://ip.whatdy.com'
 TEST_IP = 'http://httpbin.org/ip'
 TEST_HTTP_HEADER = 'http://httpbin.org/get'
 TEST_HTTPS_HEADER = 'https://httpbin.org/get'
