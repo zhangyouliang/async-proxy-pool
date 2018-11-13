@@ -28,7 +28,7 @@ def delete():
 
 
 def start_api_server():
-    app.run()
+    app.run(port=8000)
 
 if __name__ == '__main__':
     start_api_server()
