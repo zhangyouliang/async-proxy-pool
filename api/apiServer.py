@@ -22,7 +22,7 @@ def home():
 
 @app.route("/delete",methods=['GET'])
 def delete():
-    inputs = web.input()
+    inputs = request.args.to_dict()
     json_result = json.dumps(sqlhelper.delete(inputs))
     return json_result
 
