@@ -1,5 +1,15 @@
 #### # 代理池子
 
+    ## 获取代理列表
+    http://127.0.0.1:8000/?types=0&count=5
+    
+- count 数量
+- type 0高匿名，1透明
+- protocol 协议
+- country 国家
+- area 区域
+    
+    
 
 
     https://httpbin.org/get
