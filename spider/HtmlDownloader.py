@@ -15,14 +15,17 @@ class Html_Downloader(object):
     @staticmethod
     def download(url):
         try:
-            r = requests.get(url=url, headers=config.get_header(), timeout=config.TIMEOUT)
+            headers = config.get_header()
+            r = requests.get(url=url, headers=headers, timeout=config.TIMEOUT)
             r.encoding = chardet.detect(r.content)['encoding']
+
             if (not r.ok) or len(r.content) < 500:
                 raise ConnectionError
             else:
                 return r.text
 
         except Exception:
+
             count = 0  # 重试次数
             proxylist = sqlhelper.select(10)
             if not proxylist:

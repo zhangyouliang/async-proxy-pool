@@ -43,7 +43,6 @@ class ProxyCrawl(object):
             sys.stdout.write(str + "\r\n")
             sys.stdout.flush()
             proxylist = sqlhelper.select()
-
             spawns = []
             for proxy in proxylist:
                 spawns.append(gevent.spawn(detect_from_db, self.myip, proxy, self.proxies))
@@ -60,6 +59,7 @@ class ProxyCrawl(object):
                 sys.stdout.flush()
                 spawns = []
                 for p in parserList:
+                    self.crawl(p)
                     spawns.append(gevent.spawn(self.crawl, p))
                     if len(spawns) >= MAX_DOWNLOAD_CONCURRENT:
                         gevent.joinall(spawns)
