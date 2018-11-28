@@ -206,8 +206,9 @@ def baidu_check(selfip, proxies):
 def getMyIP():
     try:
         r = requests.get(url=config.TEST_IP, headers=config.get_header(), timeout=config.TIMEOUT)
-        ip = json.loads(r.text)
-        return ip['origin']
+        # ip = json.loads(r.text)
+        # return ip['origin']
+        return r.text
     except Exception as e:
         raise Test_URL_Fail
 

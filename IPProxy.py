@@ -15,7 +15,9 @@ from config import TASK_QUEUE_SIZE
 if __name__ == "__main__":
     myip = getMyIP()
     DB_PROXY_NUM = Value('i', 0)
+    # 爬取队列
     q1 = Queue(maxsize=TASK_QUEUE_SIZE)
+    # 验证队列
     q2 = Queue()
     p0 = Process(target=start_api_server)
     p1 = Process(target=startProxyCrawl, args=(q1, DB_PROXY_NUM,myip))

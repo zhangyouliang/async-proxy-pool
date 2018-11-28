@@ -190,7 +190,7 @@ def get_header():
 DEFAULT_SCORE=10
 
 TEST_URL = 'http://ip.whatdy.com'
-TEST_IP = 'http://httpbin.org/ip'
+TEST_IP = 'http://ip.whatdy.com'
 TEST_HTTP_HEADER = 'http://httpbin.org/get'
 TEST_HTTPS_HEADER = 'https://httpbin.org/get'
 #CHECK_PROXY变量是为了用户自定义检测代理的函数
