@@ -18,6 +18,7 @@ flask-script = "*"
 pyyaml = "*"
 coloredlogs = "*"
 python-json-logger = "*"
+livereload = "*"
 
 [dev-packages]
 yapf = "*"
