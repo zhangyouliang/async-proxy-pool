@@ -47,7 +47,7 @@ def getRealIp():
     return ip
 
 
-@router.route("/getIp", methods=["GET", "POST"])
+@router.route("/", methods=["GET", "POST"])
 def getIp():
     return getRealIp()
 
