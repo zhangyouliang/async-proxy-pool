@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/Users/youliangzhang/.local/share/virtualenvs/async-proxy-pool-bAzXPxC2/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "yapf"
+}

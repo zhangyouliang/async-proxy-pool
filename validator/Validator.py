@@ -29,17 +29,19 @@ def detect_from_db(myip, proxy, proxies_set):
         if proxy[2] < 1:
             sqlhelper.delete({'ip': proxy[0], 'port': proxy[1]})
         else:
-            score = proxy[2]-1
-            sqlhelper.update({'ip': proxy[0], 'port': proxy[1]}, {'score': score})
+            score = proxy[2] - 1
+            sqlhelper.update({
+                'ip': proxy[0],
+                'port': proxy[1]
+            }, {'score': score})
             proxy_str = '%s:%s' % (proxy[0], proxy[1])
             proxies_set.add(proxy_str)
 
 
-
 def validator(queue1, queue2, myip):
     tasklist = []
-    proc_pool = {}     # 所有进程列表
-    cntl_q = Queue()   # 控制信息队列
+    proc_pool = {}  # 所有进程列表
+    cntl_q = Queue()  # 控制信息队列
     while True:
         if not cntl_q.empty():
             # 处理已结束的进程
@@ -61,17 +63,22 @@ def validator(queue1, queue2, myip):
             proxy = queue1.get()
             tasklist.append(proxy)
             if len(tasklist) >= config.MAX_CHECK_CONCURRENT_PER_PROCESS:
-                p = Process(target=process_start, args=(tasklist, myip, queue2, cntl_q))
+                p = Process(
+                    target=process_start,
+                    args=(tasklist, myip, queue2, cntl_q))
                 p.start()
                 proc_pool[p.pid] = p
                 tasklist = []
 
         except Exception as e:
             if len(tasklist) > 0:
-                p = Process(target=process_start, args=(tasklist, myip, queue2, cntl_q))
+                p = Process(
+                    target=process_start,
+                    args=(tasklist, myip, queue2, cntl_q))
                 p.start()
                 proc_pool[p.pid] = p
                 tasklist = []
+
 
 def process_start(tasks, myip, queue2, cntl):
     spawns = []
@@ -88,8 +95,13 @@ def detect_proxy(selfip, proxy, queue2=None):
     '''
     ip = proxy['ip']
     port = proxy['port']
-    proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
-    protocol, types, speed = getattr(sys.modules[__name__],config.CHECK_PROXY['function'])(selfip, proxies)#checkProxy(selfip, proxies)
+    proxies = {
+        "http": "http://%s:%s" % (ip, port),
+        "https": "http://%s:%s" % (ip, port)
+    }
+    protocol, types, speed = getattr(
+        sys.modules[__name__], config.CHECK_PROXY['function'])(
+            selfip, proxies)  #checkProxy(selfip, proxies)
     if protocol >= 0:
         proxy['protocol'] = protocol
         proxy['types'] = types
@@ -140,7 +152,11 @@ def _checkHttpProxy(selfip, proxies, isHttp=True):
         test_url = config.TEST_HTTPS_HEADER
     try:
         start = time.time()
-        r = requests.get(url=test_url, headers=config.get_header(), timeout=config.TIMEOUT, proxies=proxies)
+        r = requests.get(
+            url=test_url,
+            headers=config.get_header(),
+            timeout=config.TIMEOUT,
+            proxies=proxies)
         if r.ok:
             speed = round(time.time() - start, 2)
             content = json.loads(r.text)
@@ -186,26 +202,34 @@ def baidu_check(selfip, proxies):
     #     return protocol, types, speed
     try:
         start = time.time()
-        r = requests.get(url='https://www.baidu.com', headers=config.get_header(), timeout=config.TIMEOUT, proxies=proxies)
+        r = requests.get(
+            url='https://www.baidu.com',
+            headers=config.get_header(),
+            timeout=config.TIMEOUT,
+            proxies=proxies)
         r.encoding = chardet.detect(r.content)['encoding']
         if r.ok:
             speed = round(time.time() - start, 2)
-            protocol= 0
-            types=0
+            protocol = 0
+            types = 0
 
         else:
             speed = -1
-            protocol= -1
-            types=-1
-    except Exception as e:
-            speed = -1
             protocol = -1
             types = -1
+    except Exception as e:
+        speed = -1
+        protocol = -1
+        types = -1
     return protocol, types, speed
+
 
 def getMyIP():
     try:
-        r = requests.get(url=config.TEST_IP, headers=config.get_header(), timeout=config.TIMEOUT)
+        r = requests.get(
+            url=config.TEST_IP,
+            headers=config.get_header(),
+            timeout=config.TIMEOUT)
         # ip = json.loads(r.text)
         # return ip['origin']
         return r.text
@@ -216,8 +240,11 @@ def getMyIP():
 if __name__ == '__main__':
     ip = '222.186.161.132'
     port = 3128
-    proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
-    _checkHttpProxy(None,proxies)
+    proxies = {
+        "http": "http://%s:%s" % (ip, port),
+        "https": "http://%s:%s" % (ip, port)
+    }
+    _checkHttpProxy(None, proxies)
     # getMyIP()
     # str="{ip:'61.150.43.121',address:'陕西省西安市 西安电子科技大学'}"
     # j = json.dumps(str)

@@ -2,8 +2,8 @@
 import requests
 import json
 
-# r = requests.get('http://127.0.0.1:8000/?types=0&count=5&country=中国')
-r = requests.get('http://ip.pool.whatdy.com/?types=0&count=5')
+r = requests.get('http://127.0.0.1:8000/?types=2&count=5&country=国内')
+# r = requests.get('http://ip.pool.whatdy.com/?types=2&count=5')
 ip_ports = json.loads(r.text)
 print(ip_ports)
 ip = ip_ports[0][0]

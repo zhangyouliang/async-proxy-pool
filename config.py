@@ -11,12 +11,12 @@ import os
 import random
 
 '''
-ip，端口，类型(0高匿名，1透明)，protocol(0 http,1 https),country(国家),area(省市),updatetime(更新时间)
+ip，端口，类型(0 高匿，1 匿名，2 透明 3 无效代理)，protocol(0 http,1 https),country(国家),area(省市),updatetime(更新时间)
  speed(连接速度)
 '''
 parserList = [
     {
-        'urls': ['http://www.66ip.cn/%s.html' % n for n in ['index'] + list(range(2, 12))],
+        'urls': ['http://www.66ip.cn/%s.html' % n for n in ['index'] + list(range(2, 20))],
         'type': 'xpath',
         'pattern': ".//*[@id='main']/div/div[1]/table/tr[position()>1]",
         'position': {'ip': './td[1]', 'port': './td[2]', 'type': './td[4]', 'protocol': ''}
@@ -39,14 +39,6 @@ parserList = [
         'type': 'xpath',
         'pattern': ".//*[@id='list']/table/tbody/tr[position()>0]",
         'position': {'ip': './td[1]', 'port': './td[2]', 'type': './td[3]', 'protocol': './td[4]'}
-    },
-    {
-        'urls': ['http://www.cz88.net/proxy/%s' % m for m in
-                 ['index.shtml'] + ['http_%s.shtml' % n for n in range(2, 11)]],
-        'type': 'xpath',
-        'pattern': ".//*[@id='boxright']/div/ul/li[position()>1]",
-        'position': {'ip': './div[1]', 'port': './div[2]', 'type': './div[3]', 'protocol': ''}
-
     },
     {
         'urls': ['http://www.xicidaili.com/%s/%s' % (m, n) for m in ['nn', 'nt', 'wn', 'wt'] for n in range(1, 8)],
@@ -152,7 +144,7 @@ def get_header():
         "Cookie": 'yd_cookie=9ed99ec0-ae15-4303fe81019bb6d72c6cd3aef726082a37da; _ydclearance=3af9abcce9a4dba683b90dc2-a30f-48b2-b1ce-09dce6c762fe-1543398098; Hm_lvt_1761fabf3c988e7f04bec51acd4073f4=1542105331,1543390901; Hm_lpvt_1761fabf3c988e7f04bec51acd4073f4=1543391154',
 
     }
-#默认给抓取的ip分配20分,每次连接失败,减一分,直到分数全部扣完从数据库中删除
+#默认给抓取的ip分配10分,每次连接失败,减一分,直到分数全部扣完从数据库中删除
 DEFAULT_SCORE=10
 
 TEST_URL = 'http://ip.whatdy.com'

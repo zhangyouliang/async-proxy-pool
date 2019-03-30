@@ -7,12 +7,16 @@ import config
 def checkProxyType(selfip, proxies):
     '''
     用来检测代理的类型，突然发现，免费网站写的信息不靠谱，还是要自己检测代理的类型
-    :param proxies: 代理(0 高匿，1 匿名，2 透明 3 无效代理
+    :param proxies: 代理(0 高匿，1 匿名，2 透明 3 无效代理)
     :return:
     '''
 
     try:
-        r = requests.get(url='https://incloak.com/ip/', headers=config.HEADER, timeout=config.TIMEOUT, proxies=proxies)
+        r = requests.get(
+            url='https://incloak.com/ip/',
+            headers=config.HEADER,
+            timeout=config.TIMEOUT,
+            proxies=proxies)
         print
         r.text
         # if r.ok:
@@ -32,7 +36,6 @@ def checkProxyType(selfip, proxies):
         #         return 2
         # return 3
 
-
     except Exception as e:
         print
         str(e)
@@ -42,5 +45,8 @@ def checkProxyType(selfip, proxies):
 if __name__ == '__main__':
     ip = '61.132.241.109'
     port = '808'
-    proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
+    proxies = {
+        "http": "http://%s:%s" % (ip, port),
+        "https": "http://%s:%s" % (ip, port)
+    }
     checkProxyType(None, proxies)

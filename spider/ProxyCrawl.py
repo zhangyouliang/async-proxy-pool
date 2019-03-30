@@ -15,26 +15,24 @@ from db.DataStore import store_data, sqlhelper
 from spider.HtmlDownloader import Html_Downloader
 from spider.HtmlPraser import Html_Parser
 from validator.Validator import validator, getMyIP, detect_from_db
-
 '''
 这个类的作用是描述爬虫的逻辑
 '''
 
 
-def startProxyCrawl(queue, db_proxy_num,myip):
-    crawl = ProxyCrawl(queue, db_proxy_num,myip)
+def startProxyCrawl(queue, db_proxy_num, myip):
+    crawl = ProxyCrawl(queue, db_proxy_num, myip)
     crawl.run()
 
 
 class ProxyCrawl(object):
     proxies = set()
 
-    def __init__(self, queue, db_proxy_num,myip):
+    def __init__(self, queue, db_proxy_num, myip):
         self.crawl_pool = Pool(THREADNUM)
         self.queue = queue
         self.db_proxy_num = db_proxy_num
         self.myip = myip
-
 
     def run(self):
         while True:
@@ -43,16 +41,20 @@ class ProxyCrawl(object):
             sys.stdout.write(str + "\r\n")
             sys.stdout.flush()
             proxylist = sqlhelper.select()
+            # 检查线程并发数为 MAX_CHECK_CONCURRENT_PER_PROCESS
             spawns = []
             for proxy in proxylist:
-                spawns.append(gevent.spawn(detect_from_db, self.myip, proxy, self.proxies))
+                spawns.append(
+                    gevent.spawn(detect_from_db, self.myip, proxy,
+                                 self.proxies))
                 if len(spawns) >= MAX_CHECK_CONCURRENT_PER_PROCESS:
                     gevent.joinall(spawns)
-                    spawns= []
+                    spawns = []
             gevent.joinall(spawns)
+
             self.db_proxy_num.value = len(self.proxies)
             str = 'IPProxyPool----->>>>>>>>db exists ip:%d' % len(self.proxies)
-
+            # 当有效的ip值小于一个时 需要启动爬虫进行爬取
             if len(self.proxies) < MINNUM:
                 str += '\r\nIPProxyPool----->>>>>>>>now ip num < MINNUM,start crawling...'
                 sys.stdout.write(str + "\r\n")
@@ -63,7 +65,7 @@ class ProxyCrawl(object):
                     spawns.append(gevent.spawn(self.crawl, p))
                     if len(spawns) >= MAX_DOWNLOAD_CONCURRENT:
                         gevent.joinall(spawns)
-                        spawns= []
+                        spawns = []
                 gevent.joinall(spawns)
             else:
                 str += '\r\nIPProxyPool----->>>>>>>>now ip num meet the requirement,wait UPDATE_TIME...'
@@ -97,8 +99,8 @@ if __name__ == "__main__":
     q1 = Queue()
     q2 = Queue()
     p0 = Process(target=start_api_server)
-    p1 = Process(target=startProxyCrawl, args=(q1, DB_PROXY_NUM,myip))
-    p2 = Process(target=validator, args=(q1, q2,myip))
+    p1 = Process(target=startProxyCrawl, args=(q1, DB_PROXY_NUM, myip))
+    p2 = Process(target=validator, args=(q1, q2, myip))
     p3 = Process(target=store_data, args=(q2, DB_PROXY_NUM))
 
     p0.start()

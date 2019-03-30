@@ -15,8 +15,12 @@ psutil = "*"
 pymongo = "*"
 flask = "*"
 flask-script = "*"
+pyyaml = "*"
+coloredlogs = "*"
+python-json-logger = "*"
 
 [dev-packages]
+yapf = "*"
 
 [requires]
 python_version = "3.7"

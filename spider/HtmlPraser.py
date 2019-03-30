@@ -40,7 +40,6 @@ class Html_Parser(object):
                 return True
         return False
 
-
     def XpathPraser(self, response, parser):
         '''
         针对xpath方式进行解析
@@ -69,11 +68,18 @@ class Html_Parser(object):
             except Exception as e:
                 continue
             # updatetime = datetime.datetime.now()
-            # ip，端口，类型(0高匿名，1透明)，protocol(0 http,1 https http),country(国家),area(省市),updatetime(更新时间)
+            # ip，端口，类型(0 高匿，1 匿名，2 透明 3 无效代理)，protocol(0 http,1 https http),country(国家),area(省市),updatetime(更新时间)
 
             # proxy ={'ip':ip,'port':int(port),'type':int(type),'protocol':int(protocol),'country':country,'area':area,'updatetime':updatetime,'speed':100}
-            proxy = {'ip': ip, 'port': int(port), 'types': int(type), 'protocol': int(protocol), 'country': country,
-                     'area': area, 'speed': 100}
+            proxy = {
+                'ip': ip,
+                'port': int(port),
+                'types': int(type),
+                'protocol': int(protocol),
+                'country': country,
+                'area': area,
+                'speed': 100
+            }
             proxylist.append(proxy)
         return proxylist
 
@@ -115,16 +121,33 @@ class Html_Parser(object):
                 except Exception as e:
                     continue
 
-                proxy = {'ip': ip, 'port': port, 'types': type, 'protocol': protocol, 'country': country, 'area': area,
-                         'speed': 100}
+                proxy = {
+                    'ip': ip,
+                    'port': port,
+                    'types': type,
+                    'protocol': protocol,
+                    'country': country,
+                    'area': area,
+                    'speed': 100
+                }
 
                 proxylist.append(proxy)
             return proxylist
 
-
     def CnproxyPraser(self, response, parser):
         proxylist = self.RegularPraser(response, parser)
-        chardict = {'v': '3', 'm': '4', 'a': '2', 'l': '9', 'q': '0', 'b': '5', 'i': '7', 'w': '6', 'r': '8', 'c': '1'}
+        chardict = {
+            'v': '3',
+            'm': '4',
+            'a': '2',
+            'l': '9',
+            'q': '0',
+            'b': '5',
+            'i': '7',
+            'w': '6',
+            'r': '8',
+            'c': '1'
+        }
 
         for proxy in proxylist:
             port = proxy['port']
@@ -136,7 +159,6 @@ class Html_Parser(object):
             proxy['port'] = new_port
         return proxylist
 
-
     def proxy_listPraser(self, response, parser):
         proxylist = []
         pattern = re.compile(parser['pattern'])
@@ -144,7 +166,8 @@ class Html_Parser(object):
         if matchs:
             for match in matchs:
                 try:
-                    ip_port = base64.b64decode(match.replace("Proxy('", "").replace("')", ""))
+                    ip_port = base64.b64decode(
+                        match.replace("Proxy('", "").replace("')", ""))
                     ip = ip_port.split(':')[0]
                     port = ip_port.split(':')[1]
                     type = 0
@@ -161,14 +184,14 @@ class Html_Parser(object):
                         area = addr
                 except Exception as e:
                     continue
-                proxy = {'ip': ip, 'port': int(port), 'types': type, 'protocol': protocol, 'country': country,
-                         'area': area, 'speed': 100}
+                proxy = {
+                    'ip': ip,
+                    'port': int(port),
+                    'types': type,
+                    'protocol': protocol,
+                    'country': country,
+                    'area': area,
+                    'speed': 100
+                }
                 proxylist.append(proxy)
             return proxylist
-
-
-
-
-
-
-
