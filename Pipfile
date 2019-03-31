@@ -11,6 +11,8 @@ pyquery = "*"
 requests = "*"
 flask = "*"
 sanic = "*"
+pyyaml = "*"
+coloredlogs = "*"
 
 [dev-packages]
 yapf = "*"
