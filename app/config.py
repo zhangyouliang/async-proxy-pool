@@ -27,7 +27,7 @@ INIT_SCORE = 9
 # server web host
 SERVER_HOST = "localhost"
 # server web port
-SERVER_PORT = 3289
+SERVER_PORT = 8000
 # 是否开启日志记录
 SERVER_ACCESS_LOG = True
 
@@ -38,12 +38,13 @@ VALIDATOR_BASE_URL = "http://baidu.com"
 # 校验器循环周期（分钟）
 VALIDATOR_RUN_CYCLE = 15
 
-
 # 爬取器循环周期（分钟）
 CRAWLER_RUN_CYCLE = 30
 # 请求 headers
 HEADERS = {
-    "X-Requested-With": "XMLHttpRequest",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 "
+    "X-Requested-With":
+    "XMLHttpRequest",
+    "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
 }
