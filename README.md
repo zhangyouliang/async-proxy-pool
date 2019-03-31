@@ -10,22 +10,16 @@
 
 接口
 ----
-- /getProxy 获取代理列表(默认显示1个)
 - / 获取真实 ip
-- /get 获取请求信息
+- /get/<count:int> 返回指定数量的代理，权值从大到小排序。
+- /pop 随机返回一个代理，分三次尝试。
+1. 尝试返回权值为 MAX_SCORE，也就是最新可用的代理。
+2. 尝试返回随机权值在 (MAX_SCORE -3) - MAX_SCORE 之间的代理。
+3. 尝试返回权值在 0 - MAX_SCORE 之间的代理
+- /count 返回代理池中所有代理总数
+- /count/<score:int> 返回指定权值代理总数
+- /clear/<score:int> 删除权值小于等于 score 的代理
 
-
-
-参数说明:
-
-- count 数量
-- type 类型 (0 高匿，1 匿名，2 透明 3 无效代理)
-- protocol 协议 (0 http,1 https)
-- country 国家 
-- area 区域
-- updatetime 更新时间
-- speed 连接速度
-- score 积分(满分 10分)
 
 
 参考api

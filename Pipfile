@@ -4,7 +4,6 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-redis = "*"
 lxml = "*"
 requests = "*"
 gevent = "*"
@@ -20,6 +19,10 @@ coloredlogs = "*"
 python-json-logger = "*"
 livereload = "*"
 sanic = "*"
+schedule = "*"
+aiohttp = "*"
+pyquery = "*"
+redis = "<=2.10.6"
 
 [dev-packages]
 yapf = "*"
