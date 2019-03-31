@@ -19,6 +19,7 @@ pyyaml = "*"
 coloredlogs = "*"
 python-json-logger = "*"
 livereload = "*"
+sanic = "*"
 
 [dev-packages]
 yapf = "*"

@@ -13,7 +13,6 @@
 - /getProxy 获取代理列表(默认显示1个)
 - / 获取真实 ip
 - /get 获取请求信息
-    
 
 
 
@@ -29,7 +28,12 @@
 - score 积分(满分 10分)
 
 
-参考api:
+参考api
+---
 
 - https://httpbin.org/get    
 - http://httpbin.org/ip
+
+参考
+---
+- [async-proxy-pool](https://github.com/chenjiandongx/async-proxy-pool)
